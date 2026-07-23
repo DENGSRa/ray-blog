@@ -1,0 +1,441 @@
+/*
+ * 你的自定义样式写在这里。
+ * 此文件最后加载，适合安全覆盖默认设计；不要修改 styles.css 的历史规则。
+ * 常用选择器和示例请看项目根目录的 STYLE-GUIDE.md。
+ */
+
+/* 站点基础变量仍集中在 styles.css；这里仅放项目定制覆盖。 */
+
+/* ================================================================
+   01. 页面与卡片入场动画
+   页面先淡入，重复卡片再按顺序上浮出现。
+   ================================================================ */
+
+@keyframes page-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes stagger-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 精选文章向前推进时，从右侧平滑滑入，不改变透明度。 */
+@keyframes featured-card-enter {
+  from {
+    opacity: 1;
+    transform: translateX(56px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 精选文章向后退回时，从左侧平滑滑入，不改变透明度。 */
+@keyframes featured-card-enter-prev {
+  from {
+    opacity: 1;
+    transform: translateX(-56px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* React 使用文章 id 重新挂载卡片，因此每次切换都会触发一次动画。 */
+.featured-card.slide-next {
+  animation: featured-card-enter .62s cubic-bezier(.22, 1, .36, 1) both;
+}
+.featured-card.slide-prev {
+  animation: featured-card-enter-prev .62s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.route-page {
+  animation: page-enter .18s ease-out both;
+}
+
+/* Keep the gallery lightbox above the sticky header and lock the page behind it. */
+.route-page:has(.photo-viewer) {
+  position: relative;
+  z-index: 100;
+}
+
+html {
+  scrollbar-color: rgba(100, 138, 181, .5) transparent;
+  scrollbar-width: thin;
+}
+
+body::-webkit-scrollbar { width: 9px; }
+body::-webkit-scrollbar-track { background: transparent; }
+body::-webkit-scrollbar-thumb {
+  background: rgba(100, 138, 181, .48);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background-clip: padding-box;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 138, 181, .7);
+  background-clip: padding-box;
+}
+
+/* 页面标题与主体先后出现。 */
+.route-page > .page-heading {
+  animation: stagger-enter .42s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.route-page > main,
+.route-page > .home-content,
+.route-page > .hero,
+.route-page > .featured-wrap {
+  animation: stagger-enter .46s .07s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+/* 重复内容：每张卡片按 70ms 依次入场。 */
+.articles.grid > .article-tile,
+.album-grid > .album-card,
+.gallery-mosaic > .gallery-item,
+.friend-grid > a,
+.home-posts > .home-post,
+.admin-table > article,
+.media-manager-grid > article {
+  animation: stagger-enter .48s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.articles.grid > :nth-child(1), .album-grid > :nth-child(1), .gallery-mosaic > :nth-child(1), .friend-grid > :nth-child(1), .home-posts > :nth-child(1), .admin-table > :nth-child(1), .media-manager-grid > :nth-child(1) { animation-delay: .06s; }
+.articles.grid > :nth-child(2), .album-grid > :nth-child(2), .gallery-mosaic > :nth-child(2), .friend-grid > :nth-child(2), .home-posts > :nth-child(2), .admin-table > :nth-child(2), .media-manager-grid > :nth-child(2) { animation-delay: .13s; }
+.articles.grid > :nth-child(3), .album-grid > :nth-child(3), .gallery-mosaic > :nth-child(3), .friend-grid > :nth-child(3), .home-posts > :nth-child(3), .admin-table > :nth-child(3), .media-manager-grid > :nth-child(3) { animation-delay: .20s; }
+.articles.grid > :nth-child(4), .album-grid > :nth-child(4), .gallery-mosaic > :nth-child(4), .friend-grid > :nth-child(4), .home-posts > :nth-child(4), .admin-table > :nth-child(4), .media-manager-grid > :nth-child(4) { animation-delay: .27s; }
+.articles.grid > :nth-child(5), .album-grid > :nth-child(5), .gallery-mosaic > :nth-child(5), .friend-grid > :nth-child(5), .home-posts > :nth-child(5), .admin-table > :nth-child(5), .media-manager-grid > :nth-child(5) { animation-delay: .34s; }
+.articles.grid > :nth-child(n+6), .album-grid > :nth-child(n+6), .gallery-mosaic > :nth-child(n+6), .home-posts > :nth-child(n+6), .admin-table > :nth-child(n+6), .media-manager-grid > :nth-child(n+6) { animation-delay: .41s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .route-page,
+  .route-page > .page-heading,
+  .route-page > main,
+  .route-page > .home-content,
+  .route-page > .hero,
+  .route-page > .featured-wrap,
+  .articles.grid > .article-tile,
+  .album-grid > .album-card,
+  .gallery-mosaic > .gallery-item,
+  .friend-grid > a,
+  .home-posts > .home-post,
+  .admin-table > article,
+  .media-manager-grid > article {
+    animation: none;
+  }
+  .featured-card {
+    animation: none;
+  }
+}
+
+/* ================================================================
+   02. 首页下半部分
+   文章网格、归档/标签双栏，以及横向 About Me 卡片。
+   ================================================================ */
+.home-content {
+  /* 与上方精选文章保持同一左右边界。 */
+  width: min(1260px, calc(100% - 28px));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 285px;
+  gap: 58px 64px;
+}
+/* 最新文章标题与四列文章卡片。 */
+.home-latest { grid-column: 1 / -1; }
+.home-latest .section-title { margin-bottom: 8px; }
+.home-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px 22px;
+}
+.home-post-card {
+  display: block;
+  min-width: 0;
+  padding: 0 0 16px;
+  border-bottom: 1px solid var(--line);
+}
+.home-post-media { display: block; overflow: hidden; border-radius: 11px; }
+.home-post-card .home-post-image {
+  width: 100%;
+  height: 145px;
+  border-radius: 0;
+  filter: saturate(.72) brightness(.82);
+}
+.home-post-card:hover .home-post-image { transform: scale(1.035); filter: saturate(.92) brightness(.92); }
+.home-post-card h3 {
+  margin: 13px 0 5px;
+  font-size: 17px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.home-post-card p {
+  margin: 0 0 8px;
+  min-height: 1.7em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 归档和标签在桌面端并排，移动端改为上下排列。 */
+.home-lower {
+  grid-column: 1 / -1;
+  padding-top: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 64px;
+}
+.home-lower .panel { margin: 0; }
+.home-lower .tag-panel { border-top: 0; padding-top: 0; }
+/* 底部个人信息卡片使用整行宽度，和上面内容左右对齐。 */
+.home-content > .profile-card.compact {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  min-height: 170px;
+  margin: 0;
+  padding: 30px 48px;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.home-content > .profile-card.compact .profile-avatar { margin: 0; width: 88px; height: 88px; }
+.home-content > .profile-card.compact .profile-copy p { text-align: left; max-width: 760px; }
+.home-content > .profile-card.compact .socials { justify-content: flex-start; }
+
+@media (max-width: 900px) {
+  /* 平板：页面整体变为单列，文章卡片保留两列。 */
+  .home-content { width: min(720px, calc(100% - 42px)); grid-template-columns: 1fr; gap: 42px; }
+  .home-lower, .home-content > .profile-card.compact { grid-column: 1; }
+  .home-posts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  /* 手机：文章、归档、标签和个人信息全部单列。 */
+  .home-content { width: calc(100% - 36px); gap: 34px; }
+  .home-posts-grid { gap: 22px 14px; }
+  .home-post-card .home-post-image { height: 120px; }
+  .home-post-card h3 { font-size: 16px; }
+  .home-lower { display: block; }
+  .home-lower .tag-panel { margin-top: 30px; padding-top: 25px; border-top: 1px solid var(--line); }
+  .home-content > .profile-card.compact { display: block; padding: 28px 22px; text-align: center; }
+  .home-content > .profile-card.compact .profile-avatar { margin: 0 auto 10px; width: 72px; height: 72px; }
+  .home-content > .profile-card.compact .profile-copy p { text-align: left; }
+  .home-content > .profile-card.compact .socials { justify-content: center; }
+}
+
+/* ================================================================
+   04. 管理员登录页
+   登录页沿用博客的暖色背景、衬线标题、细边框和蓝色强调，
+   让后台入口看起来像站点的一部分，而不是另一套控制台。
+   ================================================================ */
+
+.admin-login-page {
+  --login-ink: var(--text);
+  --login-muted: var(--muted);
+  --login-line: var(--line);
+  --login-accent: var(--blue);
+  position: relative;
+  isolation: isolate;
+  min-height: min(700px, calc(100vh - 56px));
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 68px 28px 76px;
+  color: var(--login-ink);
+  background:
+    radial-gradient(circle at 79% 18%, rgba(81, 121, 168, .08), transparent 24%),
+    radial-gradient(circle at 8% 92%, rgba(81, 121, 168, .06), transparent 30%),
+    var(--bg);
+}
+
+.admin-login-grid {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: .45;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 58px 58px;
+  mask-image: linear-gradient(135deg, transparent 0%, #000 28%, #000 72%, transparent 100%);
+}
+
+.admin-login-orb {
+  position: absolute;
+  z-index: -1;
+  width: 250px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(81, 121, 168, .13);
+  border-radius: 50%;
+  box-shadow: 0 0 0 24px rgba(81, 121, 168, .035), 0 0 0 52px rgba(81, 121, 168, .02);
+}
+.admin-login-orb-one { top: 10%; right: 10%; }
+.admin-login-orb-two { bottom: -165px; left: 8%; width: 340px; opacity: .68; }
+
+.admin-login-layout {
+  width: min(1050px, 100%);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(350px, 430px);
+  align-items: center;
+  gap: clamp(55px, 8vw, 130px);
+}
+
+.admin-login-intro { max-width: 500px; animation: login-rise .65s cubic-bezier(.2, .8, .2, 1) both; }
+.admin-login-kicker { display: flex; align-items: center; gap: 10px; color: var(--login-accent); font-size: 11px; letter-spacing: .16em; }
+.admin-login-kicker span { font: 600 16px/1 "Noto Serif SC", serif; letter-spacing: .08em; }
+.admin-login-kicker i { width: 28px; height: 1px; background: currentColor; opacity: .5; }
+.admin-login-kicker small { font-size: 9px; letter-spacing: .2em; opacity: .68; }
+.admin-login-intro h1 { margin: 30px 0 20px; font: 500 clamp(38px, 5vw, 64px)/1.2 "Noto Serif SC", serif; letter-spacing: .02em; }
+.admin-login-intro h1 em { color: var(--login-accent); font-style: normal; }
+.admin-login-intro>p { max-width: 330px; margin: 0; color: var(--login-muted); font-size: 14px; line-height: 2; }
+.admin-login-points { display: grid; gap: 11px; margin-top: 42px; color: var(--login-muted); font-size: 12px; }
+.admin-login-points span { display: flex; align-items: center; gap: 12px; }
+.admin-login-points b { color: var(--login-accent); font: 500 11px/1 "Noto Sans SC", sans-serif; letter-spacing: .08em; }
+
+.admin-login-card {
+  position: relative;
+  padding: 38px 38px 29px;
+  border: 1px solid var(--login-line);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  animation: login-rise .65s .1s cubic-bezier(.2, .8, .2, 1) both;
+}
+.admin-login-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 27px; color: var(--login-muted); font-size: 9px; letter-spacing: .18em; }
+.admin-login-icon { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid rgba(81, 121, 168, .24); border-radius: 9px; color: var(--login-accent); background: rgba(81, 121, 168, .08); }
+.admin-login-icon svg { width: 17px; }
+.admin-login-card h2 { margin: 0 0 8px; color: var(--login-ink); font: 500 27px "Noto Serif SC", serif; }
+.admin-login-card-desc { margin: 0 0 27px; color: var(--login-muted); font-size: 12px; }
+.admin-login-field { display: block; margin-bottom: 17px; color: var(--login-muted); font-size: 11px; }
+.admin-login-field>input, .admin-password-input { width: 100%; height: 45px; margin-top: 7px; border: 1px solid var(--login-line); border-radius: 8px; background: var(--surface-alt); color: var(--login-ink); outline: 0; transition: border-color .2s, background .2s, box-shadow .2s; }
+.admin-login-field>input { padding: 0 13px; }
+.admin-password-input { display: flex; align-items: center; padding-left: 13px; }
+.admin-password-input input { min-width: 0; flex: 1; height: 100%; padding: 0; border: 0; outline: 0; background: transparent; color: inherit; }
+.admin-login-field input::placeholder { color: var(--faint); }
+.admin-login-field>input:focus, .admin-password-input:focus-within { border-color: var(--login-accent); background: var(--surface); box-shadow: 0 0 0 3px rgba(81, 121, 168, .1); }
+.admin-login-field input:-webkit-autofill,
+.admin-login-field input:-webkit-autofill:hover,
+.admin-login-field input:-webkit-autofill:focus { -webkit-text-fill-color: var(--login-ink); -webkit-box-shadow: 0 0 0 1000px var(--surface-alt) inset; transition: background-color 9999s ease-in-out 0s; }
+.admin-password-input button { width: 40px; height: 40px; display: grid; place-items: center; border: 0; background: transparent; color: var(--login-muted); }
+.admin-password-input button:hover { color: var(--login-accent); }
+.admin-password-input svg { width: 16px; }
+.admin-login-error { margin: -2px 0 13px; color: #bd6767; }
+.admin-login-submit { width: 100%; min-height: 46px; margin-top: 5px; border-radius: 8px; background: var(--blue); color: #fff; box-shadow: 0 9px 23px rgba(81, 121, 168, .18); transition: transform .2s, box-shadow .2s, filter .2s; }
+.admin-login-submit:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 13px 28px rgba(81, 121, 168, .25); }
+.admin-login-submit svg { width: 16px; }
+.admin-login-security { display: flex; align-items: center; justify-content: center; gap: 5px; margin: 20px 0 0; color: var(--faint); font-size: 10px; }
+.admin-login-security svg { width: 13px; }
+
+@keyframes login-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 780px) {
+  .admin-login-page { min-height: calc(100vh - 56px); padding: 50px 20px; }
+  .admin-login-layout { grid-template-columns: 1fr; gap: 35px; max-width: 450px; }
+  .admin-login-intro { text-align: center; }
+  .admin-login-intro>p { margin: auto; }
+  .admin-login-points { display: none; }
+  .admin-login-kicker { justify-content: center; }
+  .admin-login-intro h1 { margin: 24px 0 13px; font-size: 39px; }
+  .admin-login-card { padding: 30px 25px 25px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-login-intro, .admin-login-card { animation: none; }
+}
+
+/* ================================================================
+   03. 浅色 / 深色主题适配
+   主题切换只改变变量和这组组件覆盖，不影响页面结构。
+   ================================================================ */
+
+/* MBTI 卡片：深色主题保持沉稳，浅色主题改为柔和的暖绿色。 */
+.personality {
+  color: #29463e;
+  background:
+    linear-gradient(140deg, rgba(221, 239, 231, .94), rgba(241, 247, 241, .96)),
+    url('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80') center/cover;
+  border: 1px solid rgba(58, 112, 91, .16);
+  box-shadow: 0 16px 42px rgba(48, 86, 70, .12);
+}
+.personality strong { color: #397d68; }
+.personality small { color: #54766a; opacity: 1; }
+.personality p { color: #4b675e; }
+.personality div span { background: rgba(57, 125, 104, .12); color: #397d68; }
+
+/* 深色主题单独加深背景，避免浅色规则在夜间显得发灰。 */
+:root[data-theme="dark"] .personality {
+  color: #b8d5c9;
+  background:
+    linear-gradient(140deg, rgba(34, 78, 68, .95), rgba(29, 48, 50, .93)),
+    url('https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80') center/cover;
+  border-color: rgba(120, 186, 167, .14);
+  box-shadow: var(--shadow);
+}
+:root[data-theme="dark"] .personality strong { color: #78baa7; }
+:root[data-theme="dark"] .personality small { color: inherit; opacity: .72; }
+:root[data-theme="dark"] .personality p { color: inherit; }
+:root[data-theme="dark"] .personality div span { background: rgba(120, 186, 167, .13); color: inherit; }
+
+/* 头像使用主题变量，避免浅色页面出现过重的黑蓝底色。 */
+.profile-avatar,
+.friend-avatar {
+  background: linear-gradient(145deg, #6f91ad, #d7e2e8);
+  color: #f8fbfd;
+}
+:root[data-theme="dark"] .profile-avatar,
+:root[data-theme="dark"] .friend-avatar {
+  background: linear-gradient(145deg, #45637e, #243747);
+  color: #e5edf2;
+}
+
+/* EPUB 阅读页和书籍封面。 */
+.book-cover img { width: 100%; height: 100%; object-fit: cover; }
+.book-reader { width: min(1000px, calc(100% - 28px)); margin: 0 auto; padding: 24px 0 60px; }
+.book-reader h1 { margin: 18px 0; font: 500 26px "Noto Serif SC", serif; }
+.epub-viewer { min-height: calc(100vh - 160px); border: 1px solid var(--line); border-radius: 12px; background: var(--surface-alt); overflow: hidden; }
+.reader-shell { position: relative; display: flex; align-items: center; gap: 12px; }
+.reader-shell .epub-viewer { flex: 1; min-width: 0; min-height: 0; height: 75vh; }
+.reader-nav { flex: 0 0 42px; width: 42px; height: 58px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-alt); color: var(--text); cursor: pointer; }
+.reader-nav:hover { color: var(--blue); border-color: var(--blue); }
+.reader-progress { display: flex; justify-content: space-between; gap: 12px; padding: 12px 8px; color: var(--muted); font-size: 13px; }
+.reader-progress b { color: var(--blue); font-weight: 500; }
+.reader-nav svg { width: 24px; height: 24px; }
+@media (max-width: 700px) { .reader-shell { gap: 5px; } .reader-nav { flex-basis: 34px; width: 34px; height: 48px; } }
+
+.profile-avatar { overflow: hidden; }
+.avatar-crop-frame { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; }
+.profile-avatar img, .avatar-setting-preview img { position: absolute; display: block; max-width: none; transform-origin: center; }
+.avatar-setting-preview { width: 170px; height: 170px; display: grid; place-items: center; overflow: hidden; margin: 2px 0 17px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--faint); font-size: 11px; box-shadow: var(--shadow); }
+.avatar-setting-preview .avatar-crop-frame { border-radius: 50%; }
+.avatar-crop-controls { width: min(470px, 100%); padding: 15px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+.avatar-control-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
+.avatar-control-heading strong { color: var(--text); font-size: 13px; }
+.avatar-control-heading .secondary-button { min-height: 29px; padding: 0 9px; font-size: 11px; }
+.range-setting { display: block; margin: 11px 0!important; color: var(--muted)!important; }
+.range-setting span { display: flex; justify-content: space-between; margin-bottom: 3px; }
+.range-setting output { color: var(--blue); font-variant-numeric: tabular-nums; }
+.range-setting input { width: 100%; height: 5px; margin: 0!important; padding: 0!important; accent-color: var(--blue); cursor: pointer; }
+.avatar-crop-hint { display: block; margin-top: 12px; color: var(--faint); font-size: 10px; }
+.books-manager .form-error { margin: -4px 0 12px; }
+.book-admin-row { grid-template-columns: 64px 1fr auto !important; }
+.book-admin-cover { width: 64px; height: 82px; display: grid; place-items: center; overflow: hidden; border-radius: 7px; background: var(--surface-alt); color: var(--blue); }
+.book-admin-cover img { width: 100%; height: 100%; object-fit: cover; }
+.book-admin-cover svg { width: 24px; }
+.book-admin-row small { display: block; margin-top: 4px; color: var(--faint); font-size: 10px; }
+.book-admin-row .admin-row-actions { align-items: center; }
+.book-admin-row .admin-row-actions .secondary-button { min-height: 31px; padding: 0 10px; font-size: 11px; }
+.book-edit-modal label { display: block; margin: 0 0 14px; color: var(--muted); font-size: 12px; }
+.book-edit-modal input, .book-edit-modal textarea { display: block; width: 100%; margin-top: 5px; padding: 9px 10px; border: 1px solid var(--line); border-radius: 7px; outline: 0; background: var(--surface-alt); color: var(--text); resize: vertical; }
+.book-edit-modal textarea { min-height: 82px; }
+.book-edit-modal input:focus, .book-edit-modal textarea:focus { border-color: var(--blue); }
+.book-edit-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 22px; }
+@media(max-width:700px){.book-admin-row{grid-template-columns:52px 1fr!important;}.book-admin-cover{width:52px;height:70px}.book-admin-row .admin-row-actions{grid-column:2;justify-content:flex-start;margin-top:3px}.book-edit-modal{padding:17px!important}}
