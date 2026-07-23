@@ -1,0 +1,44 @@
+{
+  "site": {
+    "brand": "RAY BLOG",
+    "heroTitle": "山止川行的个人博客",
+    "heroSubtitle": "山高自有客行路，水深自有渡船人。",
+    "startDate": "2025-06-23",
+    "avatar": "",
+    "profileName": "山止川行",
+    "profileCompactTitle": "About Me",
+    "profileBio": "一个热爱代码、照片与文字的普通人。注重当下体验，喜欢日常记录，这个博客是我用代码和文字记录成长的地方。",
+    "profileTags": ["前端开发", "城市摄影", "音乐爱好者", "阅读"],
+    "githubUrl": "https://github.com",
+    "email": "hello@example.com",
+    "footerQuote": "寄蜉蝣于天地，渺沧海之一粟。",
+    "copyright": "© 2026 · RAY BLOG",
+    "footerNote": "本地管理版 · 内容保存在 data/content.json",
+    "pageSubtitles": {"articles":"记录思考，也收藏被时间照亮的细节","albums":"用照片定格每一刻美好","gallery":"用镜头捕捉每一个瞬间","links":"关于我，关于这个站点"},
+    "mbti": {"type":"INFP","name":"调停者","english":"The Mediator","description":"温柔的理想主义者，富有创造力与共情力，追寻生活的意义与内心的真实。","tags":["理想主义","共情力强","富有创造力"],"url":"https://www.16personalities.com"},
+    "friends": [
+      {"title":"Dxc 的小站","description":"一位开发者的日常记录。","url":"https://example.com","avatar":""},
+      {"title":"北岸笔记","description":"在文字与摄影之间慢慢生活。","url":"https://example.com","avatar":""},
+      {"title":"花间集","description":"收集设计、音乐和片刻灵感。","url":"https://example.com","avatar":""},
+      {"title":"旅途未央","description":"愿每一次出发都通往更开阔的地方。","url":"https://example.com","avatar":""}
+    ]
+  },
+  "featuredIds": ["post-react", "post-city", "post-letter"],
+  "posts": [
+    {"id":"post-week","title":"本周碎片：夏雨与晚风","excerpt":"雨后城市变得清澈，晚风里有树叶和泥土的味道。","content":"## 周日的雨\n\n雨停之后，楼下的柏油路还留着浅浅的水光。\n\n这一周没有发生惊天动地的事，但我记住了傍晚的风、朋友分享的一首歌，还有一盏在很晚才亮起来的窗。\n\n> 生活往往不是由大事组成，而是由愿意被记住的小事组成。","date":"2026/07/19","category":"生活","tags":["随笔"],"image":"","pinned":false},
+    {"id":"post-react","title":"用 React 构建一座数字花园","excerpt":"不只是发布文章，也让知识之间自然地相互连接。","content":"## 从页面到花园\n\n一座数字花园不追求一次性完成。它允许文章被不断补充、修正和重新连接。\n\n### 几个简单的原则\n\n- 内容永远比装饰更重要\n- 链接让知识产生路径\n- 保留未完成的状态\n\n代码只是工具，真正值得长期维护的是思考本身。","date":"2026/07/15","category":"编程","tags":["React","前端"],"image":"https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=1200&q=84","pinned":true},
+    {"id":"post-city","title":"蓝调时刻的城市摄影","excerpt":"天黑之前，城市会短暂地呈现出最克制的蓝色。","content":"## 蓝调时刻\n\n日落后、夜幕真正降临前，城市会有一段很短的蓝调时刻。\n\n天空仍然保留亮度，路灯刚刚点亮，建筑的轮廓从喧闹中安静下来。摄影时不必追求复杂的构图，等待光线完成它自己的叙事。","date":"2026/07/08","category":"摄影","tags":["光影","城市"],"image":"https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=84","pinned":true},
+    {"id":"post-letter","title":"把日常写成一封长信","excerpt":"生活的意义，也许就藏在那些看似无关紧要的细节里。","content":"## 写给日常\n\n有时我会把一天写成一封没有收件人的信。\n\n里面有咖啡杯边缘的水汽、有地铁上看了一半的小说，也有下班路上突然想明白的一件小事。\n\n写下来不是为了证明什么，只是为了不让它们太快离开。","date":"2026/06/30","category":"生活","tags":["记录"],"image":"https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=84","pinned":false},
+    {"id":"post-css","title":"CSS 布局中的空间感","excerpt":"留白、比例与节奏，是网页视觉秩序真正的来源。","content":"## 空间不是剩下的部分\n\n留白并不是没有设计，而是让内容获得呼吸的空间。\n\n当信息密度被控制在合适范围，阅读才会变成一种轻松的移动。","date":"2026/06/22","category":"编程","tags":["CSS"],"image":"https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=84","pinned":false},
+    {"id":"post-color","title":"山野之间的低饱和色彩","excerpt":"降低颜色的声音，让画面中的情绪缓慢浮现。","content":"## 降低颜色的声音\n\n低饱和并不代表灰暗。它更像是一种克制的语气，让光线、雾气和层次有更多说话的余地。","date":"2026/06/16","category":"摄影","tags":["调色"],"image":"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=84","pinned":false},
+    {"id":"post-jazz","title":"关于爵士乐的一点入门","excerpt":"从一段节奏开始，慢慢走进即兴与自由的世界。","content":"## 从节奏开始\n\n爵士乐的迷人之处，在于它每一次都不完全相同。\n\n先从喜欢的旋律听起，再留意鼓、贝斯和钢琴如何互相回应。","date":"2026/06/09","category":"音乐","tags":["爵士"],"image":"https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=84","pinned":false},
+    {"id":"post-cache","title":"系统设计笔记：缓存与一致性","excerpt":"记录几个常见的缓存模式，以及如何面对最终一致性。","content":"## 缓存不是万能层\n\n缓存解决的是访问速度问题，也会带来失效和一致性的复杂性。\n\n### 需要先回答的问题\n\n- 哪些数据真正值得缓存？\n- 失效时用户能否接受短暂旧数据？\n- 如何避免热点 key 击穿？","date":"2026/06/02","category":"编程","tags":["系统设计","缓存"],"image":"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=84","pinned":false}
+  ],
+  "albums": [
+    {"id":"album-journey","slug":"journey","name":"旅途","desc":"远山与海岸，收集在路上的呼吸。","cover":"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=84","photos":[{"id":"journey-1","src":"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=84","title":"远处的山","description":"停下来等云慢慢经过山脊。","date":"2026/06/22"},{"id":"journey-2","src":"https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1600&q=84","title":"","description":"通往下一段风景的路。","date":"2026/06/20"},{"id":"journey-3","src":"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=84","title":"海岸","description":"风吹过海面的下午。","date":"2026/06/18"}]},
+    {"id":"album-daily","slug":"daily","name":"日常","desc":"咖啡、书页与午后的一点光。","cover":"https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=84","photos":[{"id":"daily-1","src":"https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1600&q=84","title":"线条","description":"仰头看见的一点秩序。","date":"2026/07/01"},{"id":"daily-2","src":"https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1600&q=84","title":"书页","description":"安静的书写时刻。","date":"2026/06/28"}]},
+    {"id":"album-wallpaper","slug":"wallpaper","name":"壁纸","desc":"留给屏幕的一片安静风景。","cover":"https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=84","photos":[{"id":"wallpaper-1","src":"https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1600&q=84","title":"蓝调城市","description":"天黑前的城市。","date":"2026/06/15"},{"id":"wallpaper-2","src":"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=84","title":"林间","description":"给屏幕留一点安静。","date":"2026/06/12"}]},
+    {"id":"album-spring","slug":"spring","name":"春","desc":"枝头初醒，风里有花香。","cover":"https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=1200&q=84","photos":[{"id":"spring-1","src":"https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=1600&q=84","title":"初春","description":"生长正在发生。","date":"2026/04/08"}]},
+    {"id":"album-summer","slug":"summer","name":"夏","desc":"潮湿的绿意与漫长白昼。","cover":"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=84","photos":[{"id":"summer-1","src":"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=84","title":"盛夏","description":"树影和潮湿的空气。","date":"2026/07/05"}]}
+  ]
+}
