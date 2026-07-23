@@ -1,0 +1,28 @@
+{
+  "name": "inkstone-blog",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"node server.mjs\" \"vite --host 127.0.0.1\"",
+    "dev:client": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "start": "NODE_ENV=production node server.mjs"
+  },
+  "dependencies": {
+    "epubjs": "^0.3.93",
+    "express": "latest",
+    "multer": "latest",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "latest",
+    "concurrently": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "vite": "latest"
+  }
+}
