@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+uploads/*
+!uploads/.gitkeep
+data/content.json
+data/content.json.*
+public/books/*
+public/uploads/*
+outputs/*.tar.gz
