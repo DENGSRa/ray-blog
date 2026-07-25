@@ -29,6 +29,16 @@
   animation: none;
 }
 
+.article-body h2,
+.article-body h3 {
+  scroll-margin-top: 80px;
+}
+
+.post-toc {
+  border-right: 1px solid var(--line);
+  padding-right: 14px;
+}
+
 @keyframes page-enter {
   from { opacity: 0; }
   to { opacity: 1; }

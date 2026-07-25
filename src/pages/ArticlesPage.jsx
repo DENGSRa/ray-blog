@@ -87,11 +87,12 @@ export function BooksPage({ books, site }) {
   );
 }
 
-export function BookReader({ book }) {
+export function BookReader({ book, theme }) {
   const readerRef = useRef(null);
   const [error, setError] = useState('');
   const [progress, setProgress] = useState({ page: 0, total: 0, chapter: '' });
   const renditionRef = useRef(null);
+
   useEffect(() => {
     if (!book || !readerRef.current) return undefined;
     const publication = ePub(book.url);
@@ -111,6 +112,18 @@ export function BookReader({ book }) {
     window.addEventListener('keydown', onKey);
     return () => { window.removeEventListener('keydown', onKey); rendition.off('relocated', updateProgress); rendition.destroy(); renditionRef.current = null; };
   }, [book]);
+
+  useEffect(() => {
+    const rendition = renditionRef.current;
+    if (!rendition) return;
+    if (theme === 'dark') {
+      try { rendition.themes.register('dark', { body: { background: '#1a1a1a', color: '#ccd4db' }, a: { color: '#648ab5' } }); } catch {}
+      rendition.themes.select('dark');
+    } else {
+      rendition.themes.select('default');
+    }
+  }, [theme]);
+
   if (!book) return null;
   const previous = () => renditionRef.current?.prev();
   const next = () => renditionRef.current?.next();

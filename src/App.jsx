@@ -87,7 +87,7 @@ export function App() {
   if (pathname === '/') page = <HomePage content={content} />;
   else if (pathname === '/articles') page = <ArticlesPage key={location.search} posts={content.posts || []} site={content.site} />;
   else if (pathname === '/books') page = <BooksPage key={location.search} books={content.books || []} site={content.site} />;
-  else if (segment[0] === 'books') page = <BookReader book={(content.books || []).find((item) => item.id === segment[1])} />;
+  else if (segment[0] === 'books') page = <BookReader book={(content.books || []).find((item) => item.id === segment[1])} theme={theme} />;
   else if (segment[0] === 'posts') {
     const post = content.posts.find((item) => item.id === segment[1]);
     page = post ? <PostPage post={post} posts={content.posts} /> : <NotFound />;
