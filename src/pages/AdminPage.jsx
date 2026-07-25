@@ -511,7 +511,7 @@ function ChangePassword({ onClose }) {
       <section onClick={(event) => event.stopPropagation()} style={{ maxWidth: 400 }}>
         <header><div><h2>修改密码</h2></div><button type="button" aria-label="关闭" onClick={onClose}><X /></button></header>
         <form onSubmit={submit} style={{ display: 'grid', gap: 14, marginTop: 18 }}>
-          <label>当前密码<input type="password" value={current} onChange={(e) => setCurrent(e.target.value)} required /></label>
+          <label>当前密码{!current && <small style={{ color: 'var(--faint)', marginLeft: 8, fontWeight: 400 }}>未设密码时留空</small>}<input type="password" value={current} onChange={(e) => setCurrent(e.target.value)} /></label>
           <label>新密码<input type="password" value={newPass} onChange={(e) => setNewPass(e.target.value)} required minLength={6} /></label>
           <label>确认新密码<input type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} required minLength={6} /></label>
           {error && <p className="form-error">{error}</p>}

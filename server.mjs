@@ -195,7 +195,7 @@ function readCookies(request) {
 function isValidSecret(value, expected) {
   const actual = Buffer.from(String(value || ''));
   const target = Buffer.from(String(expected || ''));
-  return actual.length === target.length && timingSafeEqual(actual, target);
+  return actual.length > 0 ? actual.length === target.length && timingSafeEqual(actual, target) : target.length === 0;
 }
 
 function currentAdmin(request) {
