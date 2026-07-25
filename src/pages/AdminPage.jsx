@@ -12,7 +12,9 @@ import {
   FilePlus2,
   FolderOpen,
   Image as ImageIcon,
+  Key,
   LayoutDashboard,
+  Lock,
   Plus,
   Save,
   Settings,
@@ -485,11 +487,47 @@ function SiteSettingsEditor({ initial, onSave }) {
   );
 }
 
+function ChangePassword({ onClose }) {
+  const [current, setCurrent] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const submit = async (event) => {
+    event.preventDefault();
+    setError('');
+    if (newPass !== confirm) return setError('两次输入的新密码不一致。');
+    if (newPass.length < 6) return setError('新密码至少 6 个字符。');
+    setLoading(true);
+    try {
+      await api('/api/auth/password', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: current, newPassword: newPass }) });
+      onClose();
+      alert('密码已更新。下次部署后也会生效。');
+    } catch (err) { setError(err.message); }
+    finally { setLoading(false); }
+  };
+  return (
+    <div className="media-modal" onClick={onClose}>
+      <section onClick={(event) => event.stopPropagation()} style={{ maxWidth: 400 }}>
+        <header><div><h2>修改密码</h2></div><button type="button" aria-label="关闭" onClick={onClose}><X /></button></header>
+        <form onSubmit={submit} style={{ display: 'grid', gap: 14, marginTop: 18 }}>
+          <label>当前密码<input type="password" value={current} onChange={(e) => setCurrent(e.target.value)} required /></label>
+          <label>新密码<input type="password" value={newPass} onChange={(e) => setNewPass(e.target.value)} required minLength={6} /></label>
+          <label>确认新密码<input type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} required minLength={6} /></label>
+          {error && <p className="form-error">{error}</p>}
+          <button className="primary-button" disabled={loading}>{loading ? '更新中…' : '更新密码'}</button>
+        </form>
+      </section>
+    </div>
+  );
+}
+
 export function AdminPage({ content, reload }) {
   const [tab, setTab] = useState('posts');
   const [editingPost, setEditingPost] = useState(null);
   const [editingAlbum, setEditingAlbum] = useState(null);
   const [notice, setNotice] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const run = async (request, success) => {
     await request();
@@ -551,6 +589,7 @@ export function AdminPage({ content, reload }) {
         <button className={tab === 'albums' ? 'active' : ''} onClick={() => changeTab('albums')}><FolderOpen />相册</button>
         <button className={tab === 'media' ? 'active' : ''} onClick={() => changeTab('media')}><ImageIcon />媒体库</button>
         <button className={tab === 'site' ? 'active' : ''} onClick={() => changeTab('site')}><Settings />站点设置</button>
+        <button onClick={() => setShowPassword(true)}><Lock />修改密码</button>
         <AppLink href="/"><ArrowLeft />返回站点</AppLink>
       </aside>
       <section className="admin-main">
@@ -579,6 +618,7 @@ export function AdminPage({ content, reload }) {
           </div>
         )}
       </section>
+      {showPassword && <ChangePassword onClose={() => setShowPassword(false)} />}
     </main>
   );
 }

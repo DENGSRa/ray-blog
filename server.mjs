@@ -14,7 +14,8 @@ const uploadDir = path.join(root, 'public', 'uploads');
 const bookDir = path.join(root, 'public', 'books');
 const imageUrlPrefix = '/uploads/';
 const adminUser = process.env.ADMIN_USER || 'admin';
-const adminPassword = process.env.ADMIN_PASSWORD || '';
+let adminPassword = process.env.ADMIN_PASSWORD || '';
+const passwordFile = path.join(dataDir, '.admin-password');
 const sessionTtlMs = 1000 * 60 * 60 * 12;
 const sessions = new Map();
 
@@ -23,6 +24,11 @@ async function ensureStorage() {
   await mkdir(uploadDir, { recursive: true });
   await mkdir(bookDir, { recursive: true });
   try { await access(contentFile); } catch { await copyFile(seedFile, contentFile); }
+  try {
+    const stored = await readFile(passwordFile, 'utf8');
+    const trimmed = stored.trim();
+    if (trimmed) adminPassword = trimmed;
+  } catch {}
 }
 
 async function readContent() {
@@ -240,6 +246,18 @@ app.post('/api/auth/logout', (req, res) => {
   if (token) sessions.delete(token);
   res.setHeader('Set-Cookie', 'ray_admin=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0');
   return res.status(204).end();
+});
+
+app.put('/api/auth/password', async (req, res, next) => {
+  try {
+    const current = String(req.body?.currentPassword || '');
+    const newPass = String(req.body?.newPassword || '');
+    if (!isValidSecret(current, adminPassword)) return res.status(401).json({ error: '当前密码错误。' });
+    if (newPass.length < 6) return res.status(400).json({ error: '新密码至少 6 个字符。' });
+    adminPassword = newPass;
+    await writeFile(passwordFile, newPass, 'utf8');
+    res.json({ message: '密码已更新。' });
+  } catch (error) { next(error); }
 });
 
 // Public content remains readable; media metadata and all writes require a session.
