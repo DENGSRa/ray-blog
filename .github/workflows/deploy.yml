@@ -1,0 +1,58 @@
+name: Build and Deploy to Armbian
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build production assets
+        run: npm run build
+      - name: Upload deploy artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ray-blog-build
+          path: |
+            server.mjs
+            dist/
+          retention-days: 7
+
+  deploy:
+    needs: build
+    runs-on: [self-hosted, linux, ARM64, ray-blog]
+    steps:
+      - name: Download deploy artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ray-blog-build
+          path: /tmp/ray-blog-deploy
+      - name: Deploy without rebuilding Docker
+        shell: bash
+        run: |
+          set -euo pipefail
+          app=/opt/RAY-BLOG
+          backup="/opt/RAY-BLOG-code-backup-$(date +%Y%m%d-%H%M%S).tgz"
+          tar czf "$backup" -C "$app" server.mjs dist
+          cp /tmp/ray-blog-deploy/server.mjs "$app/server.mjs"
+          cp -a /tmp/ray-blog-deploy/dist/. "$app/dist/"
+          docker cp "$app/server.mjs" ray-blog-blog:/app/server.mjs
+          docker cp "$app/dist/." ray-blog-blog:/app/dist/
+          docker restart ray-blog-blog
+          sleep 3
+          test "$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:3001/)" = 200
+          echo "Deployed successfully; backup: $backup"
