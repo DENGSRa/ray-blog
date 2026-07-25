@@ -429,6 +429,8 @@ function SiteSettingsEditor({ initial, onSave }) {
         <label>个人标签（逗号隔开）<input value={form.profileTags} onChange={(event) => update('profileTags', event.target.value)} /></label>
         <div className="form-two">
           <label>GitHub 地址<input value={form.githubUrl} onChange={(event) => update('githubUrl', event.target.value)} /></label>
+          <label>哔哩哔哩地址<input value={form.bilibiliUrl} onChange={(event) => update('bilibiliUrl', event.target.value)} /></label>
+          <label>网易云地址<input value={form.neteaseUrl} onChange={(event) => update('neteaseUrl', event.target.value)} /></label>
           <label>邮箱<input type="email" value={form.email} onChange={(event) => update('email', event.target.value)} /></label>
         </div>
       </section>

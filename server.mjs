@@ -114,6 +114,8 @@ function cleanSite(body = {}, existing = {}) {
     profileBio: text('profileBio'),
     profileTags: list('profileTags'),
     githubUrl: text('githubUrl'),
+    bilibiliUrl: text('bilibiliUrl'),
+    neteaseUrl: text('neteaseUrl'),
     email: text('email'),
     footerQuote: text('footerQuote'),
     copyright: text('copyright'),

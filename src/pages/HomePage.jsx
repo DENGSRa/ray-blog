@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ArrowRight,
   BookOpen,
@@ -7,32 +7,50 @@ import {
   ChevronRight,
   Clock3,
   GitBranch,
+  Music,
+  Film,
   Mail,
 } from 'lucide-react';
 import { AppLink } from '../lib/router';
 import { PostImage, PostMeta } from '../components/Content';
 import { avatarImageStyle } from '../lib/avatar';
 
+function Typewriter({ text, start = true, onDone }) {
+  const [display, setDisplay] = useState('');
+  const onDoneRef = useRef(onDone);
+  onDoneRef.current = onDone;
+  useEffect(() => {
+    if (!start) return;
+    setDisplay('');
+    let index = 0;
+    const timer = setInterval(() => {
+      index++;
+      setDisplay(text.slice(0, index));
+      if (index >= text.length) { clearInterval(timer); onDoneRef.current?.(); }
+    }, 80);
+    return () => clearInterval(timer);
+  }, [text, start]);
+  return <span>{display}</span>;
+}
+
 function Hero({ content, site }) {
+  const [subtitleDone, setSubtitleDone] = useState(false);
+  const [statsDone, setStatsDone] = useState(false);
+  const allDone = subtitleDone && statsDone;
   const photoCount = content.albums.reduce((sum, album) => sum + album.photos.length, 0);
   const start = new Date(site?.startDate || Date.now());
   const days = Math.max(1, Math.floor((Date.now() - start.getTime()) / 86400000));
+  const statsText = `${content.posts.length} 篇文章 · ${photoCount} 张照片 · ${days} 天`;
 
   return (
     <section className="hero">
       <div className="hero-glow" />
       <h1>{site?.heroTitle}</h1>
-      <p>{site?.heroSubtitle}</p>
+      <p className={`typewriter${subtitleDone ? ' done' : ''}`}><Typewriter text={site?.heroSubtitle || ''} onDone={() => setSubtitleDone(true)} /></p>
       <div className="ink-line" aria-hidden="true">
         {Array.from({ length: 10 }, (_, index) => <i key={index} />)}
       </div>
-      <div className="stats">
-        <span><BookOpen />{content.posts.length}<small>篇文章</small></span>
-        <b>·</b>
-        <span><Camera />{photoCount}<small>张照片</small></span>
-        <b>·</b>
-        <span><Clock3 />{days}<small>天</small></span>
-      </div>
+      <div className="stats"><Typewriter text={statsText} start={subtitleDone} onDone={() => setStatsDone(true)} /></div>
     </section>
   );
 }
@@ -121,6 +139,8 @@ export function ProfileCard({ compact = false, site }) {
         <p>{site?.profileBio}</p>
         <div className="socials">
           {site?.githubUrl && <a href={site.githubUrl} target="_blank" rel="noreferrer"><GitBranch />GitHub</a>}
+          {site?.bilibiliUrl && <a href={site.bilibiliUrl} target="_blank" rel="noreferrer"><Film />B站</a>}
+          {site?.neteaseUrl && <a href={site.neteaseUrl} target="_blank" rel="noreferrer"><Music />网易云</a>}
           {site?.email && <a href={`mailto:${site.email}`}><Mail />Email</a>}
         </div>
       </div>

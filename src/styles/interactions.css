@@ -150,8 +150,12 @@
 
 .personality:hover {
   border-color: rgba(51, 164, 116, .4);
-  box-shadow: none;
+  box-shadow: 0 8px 40px -10px rgba(92, 173, 204, .35);
   transform: none;
+}
+
+:root[data-theme="dark"] .personality:hover {
+  box-shadow: 0 8px 40px -10px rgba(92, 173, 204, .35);
 }
 
 .friend-grid a {
