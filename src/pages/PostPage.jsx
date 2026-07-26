@@ -7,7 +7,9 @@ import { PostImage, PostMeta } from '../components/Content';
 import { AppLink } from '../lib/router';
 
 function scrollToHeading(id) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const el = document.getElementById(id);
+  if (!el) return;
+  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
 }
 
 function extractText(children) {
@@ -45,11 +47,11 @@ export function PostPage({ post, posts }) {
   return (
     <main className="post-page">
       <aside className="post-toc">
+        <AppLink href="/articles" className="back-link"><ArrowLeft />返回文章</AppLink>
         <b>☷ 目录</b>
         {headings.map((h) => <button key={h.id} onClick={() => scrollToHeading(h.id)}>{h.text}</button>)}
       </aside>
       <div className="post-content">
-        <AppLink href="/articles" className="back-link"><ArrowLeft />返回文章</AppLink>
         <article className="post-detail">
           <PostImage post={post} className="post-hero-image" />
           <div className="post-heading"><h1>{post.title}</h1><PostMeta post={post} /></div>

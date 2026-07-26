@@ -35,9 +35,13 @@
 }
 
 .post-toc {
+  background: var(--bg);
   border-right: 1px solid var(--line);
-  padding-right: 14px;
+  border-radius: 12px;
+  padding: 16px 14px;
 }
+.post-toc b { font-size: 14px; }
+.post-toc .back-link { margin: 0 0 8px; font-size: 12px; }
 
 @keyframes page-enter {
   from { opacity: 0; }
