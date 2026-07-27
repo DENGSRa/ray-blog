@@ -10,6 +10,9 @@ import { AlbumPage, AlbumsPage, GalleryPage } from './pages/MediaPages';
 import { LinksPage } from './pages/LinksPage';
 import { AdminLogin, AdminPage } from './pages/AdminPage';
 
+// Keep the browser title correct before the content API finishes loading.
+const DEFAULT_PAGE_TITLE = '镭射的个人博客';
+
 function Loading() {
   return <main className="loading-page">正在读取博客内容…</main>;
 }
@@ -24,6 +27,7 @@ function NotFound() {
 }
 
 export function App() {
+  document.title = DEFAULT_PAGE_TITLE;
   const [location, setLocation] = useState(() => ({ pathname: window.location.pathname, search: window.location.search }));
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [showTop, setShowTop] = useState(false);

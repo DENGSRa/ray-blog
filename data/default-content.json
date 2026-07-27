@@ -1,11 +1,12 @@
 {
   "site": {
     "brand": "RAY BLOG",
-    "heroTitle": "山止川行的个人博客",
+    "title": "镭射的个人博客",
+    "heroTitle": "镭射的个人博客",
     "heroSubtitle": "山高自有客行路，水深自有渡船人。",
     "startDate": "2025-06-23",
     "avatar": "",
-    "profileName": "山止川行",
+    "profileName": "镭射",
     "profileCompactTitle": "About Me",
     "profileBio": "一个热爱代码、照片与文字的普通人。注重当下体验，喜欢日常记录，这个博客是我用代码和文字记录成长的地方。",
     "profileTags": ["前端开发", "城市摄影", "音乐爱好者", "阅读"],
