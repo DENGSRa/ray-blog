@@ -552,3 +552,30 @@ body::-webkit-scrollbar-thumb:hover {
   .book-edit-actions { flex-wrap: wrap; }
   .book-edit-actions button { flex: 1 1 120px; }
 }
+
+/*
+ * 文章页目录的滚动边界。
+ *
+ * sticky 元素会受到父级底部的限制。文章最后一节被定位到页面底部时，
+ * 如果父级刚好结束，浏览器会把目录向上推，造成目录位置突然改变。
+ * 桌面端目录改成固定在视口内，正文滚动时它不会被文章底部重新约束。
+ * 移动端目录是正文前的普通横向滚动条，不需要固定定位。
+ */
+@media (min-width: 701px) {
+  .post-page {
+    align-items: flex-start;
+    padding-left: 200px;
+  }
+
+  .post-toc {
+    position: fixed;
+    top: 88px;
+    left: max(18px, calc((100vw - 1100px) / 2));
+    width: 160px;
+    max-height: calc(100vh - 112px);
+  }
+}
+
+@media (max-width: 700px) {
+  .post-page { padding-left: 0; }
+}
