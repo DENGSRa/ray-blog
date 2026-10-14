@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { PostImage, PostMeta } from '../components/Content';
@@ -10,9 +10,6 @@ export function PostPage({ post, posts }) {
 
   return (
     <main className="post-page">
-      <aside className="post-back-nav">
-        <AppLink href="/articles" className="back-link"><ArrowLeft />返回文章</AppLink>
-      </aside>
       <div className="post-content">
         <article className="post-detail">
           <PostImage post={post} className="post-hero-image" />

@@ -34,15 +34,6 @@
   scroll-margin-top: 80px;
 }
 
-.post-toc {
-  background: var(--bg);
-  border-right: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 16px 14px;
-}
-.post-toc b { font-size: 14px; }
-.post-toc .back-link { margin: 0 0 8px; font-size: 12px; }
-
 @keyframes page-enter {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -553,14 +544,7 @@ body::-webkit-scrollbar-thumb:hover {
   .book-edit-actions button { flex: 1 1 120px; }
 }
 
-/*
- * 文章页目录的滚动边界。
- *
- * sticky 元素会受到父级底部的限制。文章最后一节被定位到页面底部时，
- * 如果父级刚好结束，浏览器会把目录向上推，造成目录位置突然改变。
- * 桌面端目录改成固定在视口内，正文滚动时它不会被文章底部重新约束。
- * 移动端目录是正文前的普通横向滚动条，不需要固定定位。
- */
+/* 文章页使用单栏布局，正文自适应填满可用宽度。 */
 @media (min-width: 701px) {
   .post-page {
     position: relative;
@@ -568,21 +552,13 @@ body::-webkit-scrollbar-thumb:hover {
     width: min(1100px, calc(100% - 36px));
   }
 
-  .post-back-nav {
-    position: fixed;
-    top: 88px;
-    left: max(18px, calc((100vw - 1100px) / 2));
-    z-index: 20;
-    width: 160px;
-  }
-
   .post-content {
-    width: calc(100% - 200px);
-    margin-left: 200px;
+    width: 100%;
+    margin-left: 0;
   }
 }
 
 @media (max-width: 700px) {
   .post-page { display: block; width: calc(100% - 24px); }
-  .post-back-nav { margin-bottom: 12px; }
+  .post-content { width: 100%; }
 }
