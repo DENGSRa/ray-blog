@@ -1,4 +1,4 @@
-name: Build and Deploy to Armbian
+name: Build and Deploy to Cloud Server
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: [self-hosted, linux, ARM64, ray-blog]
+    runs-on: [self-hosted, linux, ARM64, ray-blog-cloud]
     steps:
       - name: Download deploy artifact
         uses: actions/download-artifact@v4
