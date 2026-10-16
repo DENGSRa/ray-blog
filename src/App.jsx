@@ -34,7 +34,12 @@ export function App() {
   const [content, setContent] = useState(null);
   const [loadError, setLoadError] = useState('');
   const [adminAuthenticated, setAdminAuthenticated] = useState(null);
-  const { pathname } = location;
+  // Static hosting may normalize `/books` to `/books/` because the server also
+  // exposes the uploaded book files from that path. Treat both URLs as the
+  // same client route so returning from a reader never renders an empty page.
+  const pathname = location.pathname.length > 1
+    ? location.pathname.replace(/\/+$/, '')
+    : location.pathname;
   const isAdmin = pathname === '/admin';
 
   const reload = async () => {

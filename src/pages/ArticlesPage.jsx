@@ -79,7 +79,7 @@ export function BooksPage({ books, site }) {
         <div className="article-tools"><div /><div className="article-actions"><label><Search /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索书籍" /></label></div></div>
         <section className="articles grid">
           {filtered.length
-            ? filtered.map((book) => <article className="article-tile hover-glow" key={book.id}><a href={`/books/${book.id}`}><div className="article-cover book-cover">{book.cover ? <img src={book.cover} alt="" /> : <BookOpen />}</div><h3>{book.title}</h3><p>{book.description || book.filename}</p></a></article>)
+            ? filtered.map((book) => <article className="article-tile hover-glow" key={book.id}><AppLink href={`/books/${book.id}`}><div className="article-cover book-cover">{book.cover ? <img src={book.cover} alt="" /> : <BookOpen />}</div><h3>{book.title}</h3><p>{book.description || book.filename}</p></AppLink></article>)
             : <p className="empty">没有找到书籍。</p>}
         </section>
       </main>
@@ -127,5 +127,5 @@ export function BookReader({ book, theme }) {
   if (!book) return null;
   const previous = () => renditionRef.current?.prev();
   const next = () => renditionRef.current?.next();
-  return <main className="book-reader"><a className="back-link" href="/books"><ArrowLeft />返回书籍</a><h1>{book.title}</h1>{error ? <p className="empty">{error}</p> : <><div className="reader-shell"><button className="reader-nav reader-prev" onClick={previous} aria-label="上一页"><ChevronLeft /></button><div ref={readerRef} className="epub-viewer" /><button className="reader-nav reader-next" onClick={next} aria-label="下一页"><ChevronRight /></button></div><div className="reader-progress"><span>{progress.chapter || '正文'}</span><b>{progress.page ? `第 ${progress.page} / ${progress.total || '?'} 页` : '正在读取页码…'}</b></div></>}</main>;
+  return <main className="book-reader"><AppLink className="back-link" href="/books"><ArrowLeft />返回书籍</AppLink><h1>{book.title}</h1>{error ? <p className="empty">{error}</p> : <><div className="reader-shell"><button className="reader-nav reader-prev" onClick={previous} aria-label="上一页"><ChevronLeft /></button><div ref={readerRef} className="epub-viewer" /><button className="reader-nav reader-next" onClick={next} aria-label="下一页"><ChevronRight /></button></div><div className="reader-progress"><span>{progress.chapter || '正文'}</span><b>{progress.page ? `第 ${progress.page} / ${progress.total || '?'} 页` : '正在读取页码…'}</b></div></>}</main>;
 }
